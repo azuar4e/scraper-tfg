@@ -1,0 +1,12 @@
+# Git
+.github/
+.gitignore
+
+# Go
+*.exe
+
+# Env file
+.env
+
+# IDE
+.idea/
