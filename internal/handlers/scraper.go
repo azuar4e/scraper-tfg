@@ -128,7 +128,7 @@ func ProcessMessageHandler(message types.Message) {
 	}
 
 	_, err = initializers.DY.UpdateItem(context.TODO(), &dynamodb.UpdateItemInput{
-		TableName: aws.String("PriceAlerts"),
+		TableName: aws.String(os.Getenv("TABLE_NAME")),
 		Key: map[string]typeDynamo.AttributeValue{
 			"PK": &typeDynamo.AttributeValueMemberN{Value: fmt.Sprintf("%d", job.ID)},
 			"SK": &typeDynamo.AttributeValueMemberN{Value: fmt.Sprintf("%d", job.UserID)},
