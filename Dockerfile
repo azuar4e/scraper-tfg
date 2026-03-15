@@ -1,5 +1,5 @@
 # Build Stage
-FROM golang:1.24-alpine AS builder
+FROM golang:1.26.1-alpine AS builder
 
 WORKDIR /app
 
@@ -16,7 +16,8 @@ FROM alpine:latest
 
 WORKDIR /app
 
-RUN apk add --no-cache ca-certificates
+RUN apk add --no-cache ca-certificates nodejs npm && \
+    npx playwright install --with-deps
 
 COPY --from=builder /app/main .
 
