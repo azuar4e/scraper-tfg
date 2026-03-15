@@ -3,8 +3,8 @@ package models
 import "time"
 
 type Job struct {
-	ID          string    `json:"id" dynamodbav:"id"`
-	UserID      uint      `json:"user_id" dynamodbav:"user_id"`
+	ID          int64     `json:"id" dynamodbav:"id"`
+	UserID      int64     `json:"user_id" dynamodbav:"user_id"`
 	URL         string    `json:"url" dynamodbav:"url" binding:"required,url"`
 	TargetPrice float64   `json:"target_price" dynamodbav:"target_price" binding:"required"`
 	LastPrice   float64   `json:"last_price" dynamodbav:"last_price"`

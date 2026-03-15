@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"os"
 	"scraper/internal/handlers"
@@ -10,6 +9,7 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/sqs"
+	"github.com/aws/aws-sdk-go-v2/service/sqs/types"
 )
 
 func init() {
@@ -20,6 +20,12 @@ func init() {
 }
 
 func main() {
+	messageChan := make(chan types.Message)
+
+	for w := 1; w <= 5; w++ {
+		go worker(w, messageChan)
+	}
+
 	for {
 		output, err := initializers.SQS.ReceiveMessage(context.TODO(), &sqs.ReceiveMessageInput{
 			QueueUrl:            aws.String(os.Getenv("SQS_QUEUE_URL")),
@@ -32,15 +38,18 @@ func main() {
 			continue
 		}
 
-		fmt.Println("tenemos el mensaje")
-
 		for _, m := range output.Messages {
-			fmt.Println("dentro del for")
-			handlers.ProcessMessageHandler(m)
-			initializers.SQS.DeleteMessage(context.TODO(), &sqs.DeleteMessageInput{
-				QueueUrl:      aws.String(os.Getenv("SQS_QUEUE_URL")),
-				ReceiptHandle: m.ReceiptHandle,
-			})
+			messageChan <- m
 		}
+	}
+}
+
+func worker(id int, messages <-chan types.Message) {
+	for m := range messages {
+		handlers.ProcessMessageHandler(m)
+		initializers.SQS.DeleteMessage(context.TODO(), &sqs.DeleteMessageInput{
+			QueueUrl:      aws.String(os.Getenv("SQS_QUEUE_URL")),
+			ReceiptHandle: m.ReceiptHandle,
+		})
 	}
 }

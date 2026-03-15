@@ -130,8 +130,8 @@ func ProcessMessageHandler(message types.Message) {
 	_, err = initializers.DY.UpdateItem(context.TODO(), &dynamodb.UpdateItemInput{
 		TableName: aws.String(os.Getenv("TABLE_NAME")),
 		Key: map[string]typeDynamo.AttributeValue{
-			"PK": &typeDynamo.AttributeValueMemberN{Value: fmt.Sprintf("%d", job.ID)},
-			"SK": &typeDynamo.AttributeValueMemberN{Value: fmt.Sprintf("%d", job.UserID)},
+			"PK": &typeDynamo.AttributeValueMemberN{Value: fmt.Sprintf("%d", job.UserID)},
+			"SK": &typeDynamo.AttributeValueMemberN{Value: fmt.Sprintf("%d", job.ID)},
 		},
 		UpdateExpression:         aws.String("SET #s = :s, last_price = :p, updated_at = :t"),
 		ExpressionAttributeNames: map[string]string{"#status": "status"},
@@ -157,13 +157,12 @@ func parsePrice(price string) (float64, error) {
 		return 0, fmt.Errorf("No price found")
 	}
 
-	if strings.Contains(match, ",") && strings.Contains(match, ".") {
-		match = strings.ReplaceAll(match, ",", "")
-	}
-
-	if strings.Count(match, ",") == 1 && !strings.Contains(match, ".") {
+	if strings.Contains(match, ",") {
 		match = strings.ReplaceAll(match, ",", ".")
 	}
+
+	n := strings.Count(match, ".") - 1
+	match = strings.Replace(match, ".", "", n)
 
 	return strconv.ParseFloat(match, 64)
 }
