@@ -19,7 +19,8 @@ RUN apk add --no-cache ca-certificates
 
 COPY go.mod go.sum ./
 
-RUN go mod download && go run github.com/playwright-community/playwright-go/cmd/playwright install --with-deps
+RUN go mod download 
+RUN go run github.com/playwright-community/playwright-go/cmd/playwright install --with-deps
 
 COPY --from=builder /app/main .
 
