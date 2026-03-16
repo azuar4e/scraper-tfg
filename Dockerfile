@@ -18,9 +18,8 @@ WORKDIR /app
 RUN apk add --no-cache ca-certificates
 
 COPY go.mod go.sum ./
-COPY --from=builder /root/go/pkg/mod /root/go/pkg/mod
 
-RUN go run github.com/playwright-community/playwright-go/cmd/playwright install --with-deps
+RUN go mod download && go run github.com/playwright-community/playwright-go/cmd/playwright install --with-deps
 
 COPY --from=builder /app/main .
 
