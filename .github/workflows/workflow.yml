@@ -20,6 +20,16 @@ jobs:
         with:
           go-version: '1.24'
       -
+        name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      -
+        name: Install Playwright
+        run: |
+          npm install -g playwright
+          npx playwright install --with-deps
+      -
         name: Install dependencies
         run: go mod download
       -
