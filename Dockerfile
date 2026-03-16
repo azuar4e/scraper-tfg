@@ -15,7 +15,7 @@ FROM golang:1.24-alpine
 
 WORKDIR /app
 
-RUN apk add --no-cache ca-certificates
+RUN apk add --no-cache ca-certificates nodejs
 
 COPY go.mod go.sum ./
 
