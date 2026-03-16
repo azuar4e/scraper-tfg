@@ -24,7 +24,9 @@ jobs:
         run: go mod download
       -
         name: Install playwright driver
-        run: go run github.com/playwright-community/playwright-go/cmd/playwright@latest install --with-deps
+        run: |
+          go run github.com/playwright-community/playwright-go/cmd/playwright@latest install --with-deps
+          go build github.com/playwright-community/playwright-go/cmd/playwright
       -
         name: Run tests
         run: go test ./...
