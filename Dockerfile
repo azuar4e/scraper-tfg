@@ -16,12 +16,8 @@ FROM alpine:latest
 
 WORKDIR /app
 
-RUN apk add --no-cache ca-certificates chromium
-
-COPY go.mod go.sum ./
-COPY --from=builder /root/go/pkg/mod /root/go/pkg/mod
-
-RUN go run github.com/playwright-community/playwright-go/cmd/playwright install --with-deps
+RUN apk add --no-cache ca-certificates nodejs npm && \
+    npx playwright install --with-deps
 
 COPY --from=builder /app/main .
 
