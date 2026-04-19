@@ -134,7 +134,7 @@ func ProcessMessageHandler(message types.Message) {
 			"SK": &typeDynamo.AttributeValueMemberN{Value: fmt.Sprintf("%d", job.ID)},
 		},
 		UpdateExpression:         aws.String("SET #s = :s, last_price = :p, updated_at = :t"),
-		ExpressionAttributeNames: map[string]string{"#status": "status"},
+		ExpressionAttributeNames: map[string]string{"#s": "status"},
 		ExpressionAttributeValues: map[string]typeDynamo.AttributeValue{
 			":s": &typeDynamo.AttributeValueMemberS{Value: status},
 			":p": &typeDynamo.AttributeValueMemberN{Value: fmt.Sprintf("%.2f", lastPrice)},
