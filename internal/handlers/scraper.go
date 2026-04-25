@@ -128,11 +128,13 @@ func ProcessMessageHandler(message types.Message) {
 		}
 	}
 
+	id, _ := job.ID.Int64()
+
 	_, err = initializers.DY.UpdateItem(context.TODO(), &dynamodb.UpdateItemInput{
 		TableName: aws.String(os.Getenv("TABLE_NAME")),
 		Key: map[string]typeDynamo.AttributeValue{
 			"PK": &typeDynamo.AttributeValueMemberN{Value: fmt.Sprintf("%d", job.UserID)},
-			"SK": &typeDynamo.AttributeValueMemberN{Value: fmt.Sprintf("%d", job.ID)},
+			"SK": &typeDynamo.AttributeValueMemberN{Value: fmt.Sprintf("%d", id)},
 		},
 		UpdateExpression:         aws.String("SET #s = :s, last_price = :p, updated_at = :t"),
 		ExpressionAttributeNames: map[string]string{"#s": "status"},

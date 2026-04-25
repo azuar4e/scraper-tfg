@@ -1,6 +1,8 @@
 package models
 
 import (
+	"encoding/json"
+	"strconv"
 	"time"
 )
 
@@ -21,7 +23,7 @@ func (d JobDynamoItem) ToJob() Job {
 	created, _ := time.Parse(time.RFC3339, d.CreatedAt)
 	updated, _ := time.Parse(time.RFC3339, d.UpdatedAt)
 	return Job{
-		ID:          d.SK,
+		ID:          json.Number(strconv.FormatInt(d.SK, 10)),
 		UserID:      d.PK,
 		URL:         d.URL,
 		TargetPrice: d.TargetPrice,

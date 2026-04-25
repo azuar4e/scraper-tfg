@@ -1,14 +1,17 @@
 package models
 
-import "time"
+import (
+	"encoding/json"
+	"time"
+)
 
 type Job struct {
-	ID          int64     `json:"id" dynamodbav:"id"`
-	UserID      int64     `json:"user_id" dynamodbav:"user_id"`
-	URL         string    `json:"url" dynamodbav:"url" binding:"required,url"`
-	TargetPrice float64   `json:"target_price" dynamodbav:"target_price" binding:"required"`
-	LastPrice   float64   `json:"last_price" dynamodbav:"last_price"`
-	Status      string    `json:"status" dynamodbav:"status"`
-	CreatedAt   time.Time `json:"created_at" dynamodbav:"created_at"`
-	UpdatedAt   time.Time `json:"updated_at" dynamodbav:"updated_at"`
+	ID          json.Number `json:"id" dynamodbav:"id"`
+	UserID      int64       `json:"user_id" dynamodbav:"user_id"`
+	URL         string      `json:"url" dynamodbav:"url" binding:"required,url"`
+	TargetPrice float64     `json:"target_price" dynamodbav:"target_price" binding:"required"`
+	LastPrice   float64     `json:"last_price" dynamodbav:"last_price"`
+	Status      string      `json:"status" dynamodbav:"status"`
+	CreatedAt   time.Time   `json:"created_at" dynamodbav:"created_at"`
+	UpdatedAt   time.Time   `json:"updated_at" dynamodbav:"updated_at"`
 }
