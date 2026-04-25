@@ -63,12 +63,13 @@ func worker(id int, messages <-chan types.Message) {
 func setJobStatus(m types.Message, status string) {
 	var job models.Job
 	json.Unmarshal([]byte(*m.Body), &job)
+	id, _ := job.ID.Int64()
 
 	initializers.DY.UpdateItem(context.TODO(), &dynamodb.UpdateItemInput{
 		TableName: aws.String(os.Getenv("TABLE_NAME")),
 		Key: map[string]typeDynamo.AttributeValue{
 			"PK": &typeDynamo.AttributeValueMemberN{Value: fmt.Sprintf("%d", job.UserID)},
-			"SK": &typeDynamo.AttributeValueMemberN{Value: fmt.Sprintf("%d", job.ID)},
+			"SK": &typeDynamo.AttributeValueMemberN{Value: fmt.Sprintf("%d", id)},
 		},
 		UpdateExpression:         aws.String("SET #s = :s"),
 		ExpressionAttributeNames: map[string]string{"#s": "status"},
