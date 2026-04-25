@@ -26,6 +26,7 @@ import (
 func ProcessMessageHandler(message types.Message) {
 
 	fmt.Println("processing message")
+	fmt.Println("Body recibido:", *message.Body)
 	var job models.Job
 	err := json.Unmarshal([]byte(*message.Body), &job)
 
