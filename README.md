@@ -11,10 +11,11 @@ The complete explanation of the project can be found at my [TFG](https://github.
 
 The scraper has the following features:
 
+- Receives the jobs messages through the Simple Queue Service (SQS) queue.
 - Searches for the price and name of the product.
 - Reads the jobs information from DynamoDB table and updates the last price.
-- Notifies users when the price is the desired by the Simple Notification Service (SNS) topic.
-- Delete the jobs from the Simple Queue Service (SQS) queue, which are marked again as ready and re-scheduled by a lambda function.
+- Notifies users when the price reaches the desired value by the Simple Notification Service (SNS) topic.
+- Deletes the jobs from the SQS queue, which are marked again as `ready` and re-scheduled by a lambda function.
 
 ## How it works?
 
