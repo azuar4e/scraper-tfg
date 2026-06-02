@@ -1,7 +1,7 @@
 # Scraper
 
 ![Go](https://img.shields.io/badge/Go-1.24-blue)
-![AWS](https://img.shields.io/badge/AWS-EKS%20%7C%20RDS%20%7C%20DynamoDB%20%7C%20SQS%20%7C%20SNS-orange)
+![AWS](https://img.shields.io/badge/AWS-EKS%20%7C%20%7C%20DynamoDB%20%7C%20SQS%20%7C%20SNS-orange)
 
 The source code of this repository corresponds to the Scraper microservice for my TFG (bachelor's thesis). The scraper is the responsible for processing all user messages published at the SQS queue. It uses Playwright, a library for automatization of browsers, and the AWS SDK for Go, necessary for the integration with the managed services used in the architecture.
 
