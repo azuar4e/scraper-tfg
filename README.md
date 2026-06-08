@@ -5,7 +5,7 @@
 
 The source code of this repository corresponds to the Scraper microservice for my TFG (bachelor's thesis). The scraper is the responsible for processing all user messages published at the SQS queue. It uses Playwright, a library for automatization of browsers, and the AWS SDK for Go, necessary for the integration with the managed services used in the architecture.
 
-The complete explanation of the project can be found at my [TFG](https://github.com/azuar4e/tfg) repository.
+The complete explanation of the project can be found in my [TFG](https://azuar4e.github.io/en/posts/tfg) article on my blog.
 
 ## Overview
 
